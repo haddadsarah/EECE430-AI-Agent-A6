@@ -40,3 +40,14 @@ jobs:
 
       - name: Push Docker image
         run: docker push ghcr.io/haddadsarah/eece430-ai-agent-a6:latest
+
+
+  deploy:
+    needs: test
+    runs-on: [self-hosted, inventory-deploy]
+    steps:
+      - name: Check Docker on Windows
+        if: runner.os == 'Windows'
+        shell: powershell -NoProfile -ExecutionPolicy Bypass -File {0}
+        run: docker info
+
